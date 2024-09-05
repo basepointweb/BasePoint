@@ -60,7 +60,7 @@ namespace BasePoint.Core.Domain.Interceptors
             }
         }
 
-        private bool MethodIsAllowedToIntercept(InvocationInfo info)
+        private static bool MethodIsAllowedToIntercept(InvocationInfo info)
         {
             string methodName = info.TargetMethod.Name;
 
