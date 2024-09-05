@@ -1,0 +1,6 @@
+@BasePoint.Core.Presentation.AspNetCoreApi_HostAddress = http://localhost:5117
+
+GET {{BasePoint.Core.Presentation.AspNetCoreApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
