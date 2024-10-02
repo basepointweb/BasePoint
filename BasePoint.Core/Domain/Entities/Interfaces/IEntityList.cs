@@ -15,5 +15,11 @@
         IEntityList<Entity> Clone();
 
         int RemoveAll(Predicate<Entity> match);
+
+        bool ContainsWithId(Guid entityId);
+
+        bool HasMissingEntities(IEnumerable<Guid> entityIds);
+
+        bool HasMissingEntities(IEnumerable<Entity> items);
     }
 }

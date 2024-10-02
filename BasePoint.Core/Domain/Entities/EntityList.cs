@@ -1,6 +1,6 @@
-﻿using BasePoint.Core.Shared;
+﻿using BasePoint.Core.Domain.Entities.Interfaces;
 using BasePoint.Core.Domain.Enumerators;
-using BasePoint.Core.Domain.Entities.Interfaces;
+using BasePoint.Core.Shared;
 using System.Collections;
 
 namespace BasePoint.Core.Domain.Entities
@@ -98,6 +98,23 @@ namespace BasePoint.Core.Domain.Entities
         public bool Contains(Entity item)
         {
             return _items.Contains(item);
+        }
+
+        public bool ContainsWithId(Guid entityId)
+        {
+            return _items.Any(item => item.Id == entityId);
+        }
+
+        public bool HasMissingEntities(IEnumerable<Guid> entityIds)
+        {
+            return _items
+                .Select(x => x.Id)
+                .Any(item => !entityIds.Contains(item));
+        }
+
+        public bool HasMissingEntities(IEnumerable<Entity> items)
+        {
+            return HasMissingEntities(items.Select(x => x.Id));
         }
 
         public void CopyTo(Entity[] array, int arrayIndex)
