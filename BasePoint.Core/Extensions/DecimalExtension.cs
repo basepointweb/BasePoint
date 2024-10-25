@@ -6,12 +6,7 @@ namespace BasePoint.Core.Extensions
     {
         public static decimal NegativeIfPositive(this decimal value)
         {
-            var result = value;
-
-            if (value > decimal.Zero)
-                result = -value;
-
-            return result;
+            return NegateIf(value, value > decimal.Zero);
         }
 
         public static decimal NegateIf(this decimal value, bool negateCondition)
@@ -29,25 +24,23 @@ namespace BasePoint.Core.Extensions
             return -value;
         }
 
-        public static decimal DivedeBy(this decimal? value1, decimal? value2, int? decimalPlaces = null)
+        public static decimal DivideBy(this decimal? value1, decimal? value2, int? decimalPlaces = null)
         {
             if (!value1.HasValue || !value2.HasValue)
                 return decimal.Zero;
 
-            return value1.DivedeBy(value2.Value, decimalPlaces);
+            return value1.DivideBy(value2.Value, decimalPlaces);
         }
 
-        public static decimal DivedeBy(this decimal value1, decimal value2, int? decimalPlaces = null)
+        public static decimal DivideBy(this decimal value1, decimal value2, int? decimalPlaces = null)
         {
-            if (value1 == decimal.Zero)
+            if ((value1 == decimal.Zero) || (value2 == decimal.Zero))
                 return decimal.Zero;
 
             decimal result = value1 / value2;
 
             if (decimalPlaces.HasValue)
-            {
                 result = Math.Round(result, decimalPlaces.Value);
-            }
 
             return result;
         }
@@ -65,6 +58,16 @@ namespace BasePoint.Core.Extensions
         public static decimal PercentualValue(this decimal value, decimal percentage)
         {
             return value * percentage;
+        }
+
+        public static decimal PercentageOf(this decimal value1, decimal value2)
+        {
+            return value1 / value2;
+        }
+
+        public static decimal PercentageHundredBasedOf(this decimal value1, decimal value2)
+        {
+            return value1 / value2 * Constants.HandredBasedAHundredPercent;
         }
 
         public static decimal PercentualHandredBasedValue(this decimal value, decimal percentage)
@@ -95,6 +98,53 @@ namespace BasePoint.Core.Extensions
         public static bool RoundedEqualsTo(this decimal value1, decimal value2, int decimalPlaces = 2)
         {
             return (Math.Round(value1, decimalPlaces) == Math.Round(value2, decimalPlaces));
+        }
+
+        public static decimal Round(this decimal value1, int decimalPlaces = 2)
+        {
+            return Math.Round(value1, decimalPlaces);
+        }
+
+        public static List<decimal> SplitIntoInstallments(this decimal amount, int numberOfInstallments, bool resisualInFirstInstallment = true)
+        {
+            var installments = new List<decimal>();
+
+            decimal installmentValue = Math.Floor(amount / numberOfInstallments * Constants.HandredBasedAHundredPercent) / Constants.HandredBasedAHundredPercent;
+
+            decimal residualValue = amount - (installmentValue * numberOfInstallments);
+
+            if (resisualInFirstInstallment)
+            {
+                installments.Add(installmentValue + residualValue);
+
+                for (int i = 1; i < numberOfInstallments; i++)
+                {
+                    installments.Add(installmentValue);
+                }
+            }
+            else
+            {
+                for (int i = Constants.ZeroBasedFirstIndex; i < numberOfInstallments.ToZeroBasedIndex(); i++)
+                {
+                    installments.Add(installmentValue);
+                }
+
+                installments.Add(installmentValue + residualValue);
+            }
+
+            return installments;
+        }
+
+        public static decimal CalculateCompoundInterestMonthly(this decimal principal, decimal monthlyRate, int months)
+        {
+            double compoundFactor = Math.Pow((double)(Constants.AHundredPercent + monthlyRate), months);
+            return principal * (decimal)compoundFactor;
+        }
+
+        public static decimal CalculateCompoundInterestYearly(this decimal principal, decimal annualRate, int years, int timesCompounded = 12)
+        {
+            double compoundFactor = Math.Pow((double)(Constants.AHundredPercent + annualRate) / timesCompounded, timesCompounded * years);
+            return principal * (decimal)compoundFactor;
         }
     }
 }

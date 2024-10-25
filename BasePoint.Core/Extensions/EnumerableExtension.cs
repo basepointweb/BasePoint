@@ -38,5 +38,10 @@ namespace BasePoint.Core.Extensions
 
             return false;
         }
+
+        public static IEnumerable<TResult> SafeSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        {
+            return source?.Select(selector) ?? Enumerable.Empty<TResult>();
+        }
     }
 }
