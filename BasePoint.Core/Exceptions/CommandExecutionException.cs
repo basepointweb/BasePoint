@@ -15,5 +15,11 @@ namespace BasePoint.Core.Exceptions
            : base(errors)
         {
         }
+
+        public static void ThrowIf(bool condition, string message)
+        {
+            if (condition)
+                throw new CommandExecutionException(message);
+        }
     }
 }

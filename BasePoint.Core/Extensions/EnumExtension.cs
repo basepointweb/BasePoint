@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using BasePoint.Core.Shared;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace BasePoint.Core.Extensions
@@ -50,7 +51,23 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return values.First();
 
-            return values[currentIndex + 1];
+            return values[currentIndex + Constants.QuantityOne];
+        }
+
+        public static Enum CyclingLastValue<T>(this Enum enumValue) where T : Enum
+        {
+            Type type = enumValue.GetType();
+
+            var values = Enum.GetValues(typeof(T))
+                .Cast<T>()
+                .ToList();
+
+            var currentIndex = values.IndexOf((T)enumValue);
+
+            if (currentIndex <= Constants.ZeroBasedFirstIndex)
+                return values.Last();
+
+            return values[currentIndex - Constants.QuantityOne];
         }
     }
 }

@@ -18,5 +18,11 @@ namespace BasePoint.Core.Exceptions
             : base(errorMessage)
         {
         }
+
+        public static void ThrowIf(bool condition, string message)
+        {
+            if (condition)
+                throw new ValidationException(message);
+        }
     }
 }

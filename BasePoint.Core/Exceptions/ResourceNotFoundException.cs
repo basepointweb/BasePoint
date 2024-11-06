@@ -18,5 +18,11 @@ namespace BasePoint.Core.Exceptions
         {
 
         }
+
+        public static void ThrowIf(bool condition, string message)
+        {
+            if (condition)
+                throw new ResourceNotFoundException(message);
+        }
     }
 }

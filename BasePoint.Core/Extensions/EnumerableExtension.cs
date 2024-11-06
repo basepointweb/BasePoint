@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using BasePoint.Core.Shared;
+using System.Linq.Expressions;
 
 namespace BasePoint.Core.Extensions
 {
@@ -29,7 +30,6 @@ namespace BasePoint.Core.Extensions
 
                 var compositeKey = string.Join("|", keyValues);
 
-
                 if (!uniqueKeys.Add(compositeKey))
                 {
                     return true;
@@ -42,6 +42,11 @@ namespace BasePoint.Core.Extensions
         public static IEnumerable<TResult> SafeSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             return source?.Select(selector) ?? Enumerable.Empty<TResult>();
+        }
+
+        public static int LastIndex<T>(this IEnumerable<T> source)
+        {
+            return source?.Count().ToZeroBasedIndex() ?? Constants.QuantityMinusOne;
         }
     }
 }

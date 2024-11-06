@@ -1,5 +1,5 @@
-﻿using BasePoint.Core.Domain.Enumerators;
-using BasePoint.Core.Domain.Entities;
+﻿using BasePoint.Core.Domain.Entities;
+using BasePoint.Core.Domain.Enumerators;
 using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;

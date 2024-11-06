@@ -14,7 +14,7 @@ namespace BasePoint.Core.Extensions
             var result = value;
 
             if (negateCondition)
-                result = -value;
+                result = Negate(result);
 
             return result;
         }
@@ -107,11 +107,11 @@ namespace BasePoint.Core.Extensions
 
         public static List<decimal> SplitIntoInstallments(this decimal amount, int numberOfInstallments, bool resisualInFirstInstallment = true)
         {
-            var installments = new List<decimal>();
-
             decimal installmentValue = Math.Floor(amount / numberOfInstallments * Constants.HandredBasedAHundredPercent) / Constants.HandredBasedAHundredPercent;
 
             decimal residualValue = amount - (installmentValue * numberOfInstallments);
+
+            var installments = new List<decimal>();
 
             if (resisualInFirstInstallment)
             {

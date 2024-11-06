@@ -4,7 +4,7 @@
     {
         public static bool IsValid(this Guid? value)
         {
-            return (value != null) && (value != Guid.Empty);
+            return (value != null) && IsValid(value.Value);
         }
 
         public static bool IsValid(this Guid value)

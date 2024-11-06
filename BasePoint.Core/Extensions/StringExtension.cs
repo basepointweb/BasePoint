@@ -21,59 +21,72 @@ namespace BasePoint.Core.Extensions
             var normalizedString = text.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();
 
-            foreach (var c in normalizedString)
+            foreach (var character in normalizedString)
             {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(character);
                 if (unicodeCategory != UnicodeCategory.NonSpacingMark)
                 {
-                    stringBuilder.Append(c);
+                    stringBuilder.Append(character);
                 }
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
-        public static string FirstWord(this string name)
+        public static string FirstWord(this string text)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(text))
                 return string.Empty;
 
-            var words = name.Split(" ");
+            var words = text.Split(Constants.StringSpace);
 
             var result = string.Empty;
 
             if (words.Any())
-                result = words[0];
+                result = words[Constants.QuantityZero];
 
             return result;
         }
 
-        public static string LastWord(this string name)
+        public static string LastWord(this string text)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(text))
                 return string.Empty;
 
-            var words = name.Split(Constants.StringSpace);
+            var words = text.Split(Constants.StringSpace);
 
             var result = string.Empty;
 
-            if (words.Length != Constants.QuantityZeroItems)
+            if (words.Length != Constants.QuantityZero)
             {
                 var lastWord = words.Last();
 
-                if (lastWord != name.LastWord())
+                if (lastWord != text.LastWord())
                     result = lastWord;
             }
 
             return result;
         }
 
-        public static string CapitalizeFirstLetter(this string name)
+        public static string CapitalizeFirstLetter(this string text)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(text))
                 return string.Empty;
 
-            return name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
+            return
+                text.Substring(Constants.ZeroBasedFirstIndex, Constants.QuantityOne).ToUpper() +
+                text.Substring(Constants.QuantityOne)
+                .ToLower();
+        }
+
+        public static int WordCount(this string text)
+        {
+            var wordSeparators = new char[] { Constants.CharSpace, Constants.CharTab, Constants.CharEnter };
+
+            int wordCount = text.Split(wordSeparators, StringSplitOptions.RemoveEmptyEntries)
+                .Length;
+
+            return wordCount;
         }
     }
 }

@@ -157,7 +157,7 @@ namespace BasePoint.Core.Domain.Entities
         {
             var itemsToRemove = _items.Where(i => match(i)).ToList();
 
-            if ((itemsToRemove.Count() > Constants.QuantityZeroItems) && (Parent != null))
+            if ((itemsToRemove.Count() > Constants.QuantityZero) && (Parent != null))
             {
                 Parent.SetStateAsUpdated();
             }

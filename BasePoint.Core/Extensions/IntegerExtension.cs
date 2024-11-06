@@ -6,12 +6,12 @@ namespace BasePoint.Core.Extensions
     {
         public static int ToZeroBasedIndex(this int integerValue)
         {
-            return integerValue - Constants.QuantityOneItem;
+            return integerValue - Constants.QuantityOne;
         }
 
         public static int FromZeroBasedIndex(this int integerValue)
         {
-            return integerValue + Constants.QuantityOneItem;
+            return integerValue + Constants.QuantityOne;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BasePoint.Core.Extensions
+﻿using BasePoint.Core.Shared;
+
+namespace BasePoint.Core.Extensions
 {
     public static class DayOfWeekExtension
     {
@@ -22,13 +24,18 @@
             return (DayOfWeek)dayOfWeek.CyclingNextValue<DayOfWeek>();
         }
 
+        public static DayOfWeek LastDay(this DayOfWeek dayOfWeek)
+        {
+            return (DayOfWeek)dayOfWeek.CyclingLastValue<DayOfWeek>();
+        }
+
         public static int DaysToNext(this DayOfWeek dayOfWeek, DayOfWeek nextDay)
         {
             if (dayOfWeek == nextDay)
-                return 0;
+                return Constants.QuantityZero;
 
             var currentDay = dayOfWeek;
-            int days = 0;
+            int days = Constants.QuantityZero;
 
             while (currentDay != nextDay)
             {
@@ -37,6 +44,28 @@
             }
 
             return days;
+        }
+
+        public static int DaysSinceLast(this DayOfWeek dayOfWeek, DayOfWeek lastDay)
+        {
+            if (dayOfWeek == lastDay)
+                return Constants.QuantityZero;
+
+            var currentDay = dayOfWeek;
+            int days = Constants.QuantityZero;
+
+            while (currentDay != lastDay)
+            {
+                currentDay = currentDay.LastDay();
+                days++;
+            }
+
+            return days;
+        }
+
+        public static bool IsWeekend(this DayOfWeek dayOfWeek)
+        {
+            return (dayOfWeek.In(DayOfWeek.Sunday, DayOfWeek.Saturday));
         }
     }
 }

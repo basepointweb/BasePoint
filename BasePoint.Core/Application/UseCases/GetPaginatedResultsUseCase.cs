@@ -33,9 +33,9 @@ namespace BasePoint.Core.Application.UseCases
             var maxPage = (int)(resultsCount / input.ItemsPerPage);
             var remainder = (resultsCount % input.ItemsPerPage);
 
-            maxPage += ((remainder > Constants.QuantityZeroItems) ? Constants.FirstIndex : Constants.ZeroBasedFirstIndex);
+            maxPage += ((remainder > Constants.QuantityZero) ? Constants.FirstIndex : Constants.ZeroBasedFirstIndex);
 
-            if ((resultsCount > Constants.QuantityZeroItems) && (input.PageNumber > maxPage))
+            if ((resultsCount > Constants.QuantityZero) && (input.PageNumber > maxPage))
                 throw new InvalidInputException(Constants.ErrorMessages.PageNumberMustBeLessOrEqualMaxPage.Format(maxPage));
 
             return CreateSuccessOutput(new PaginatedOutput<Output>(input.PageNumber, maxPage, resultsCount, resultsInPage));
