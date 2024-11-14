@@ -34,6 +34,21 @@ namespace BasePoint.Core.Extensions
             return inputDateTime.AddDays(Constants.DaysInAWeek * numberOfWeeks);
         }
 
+        public static DateTime AddWorkingDays(this DateTime inputDateTime, int numberOfDays)
+        {
+            var addedDateTime = inputDateTime;
+
+            for (int i = Constants.ZeroBasedFirstIndex; i < numberOfDays; i++)
+            {
+                do
+                {
+                    addedDateTime = addedDateTime.AddDays(Constants.QuantityOne);
+                } while (!addedDateTime.IsWeekend());
+            }
+
+            return addedDateTime;
+        }
+
         public static int DaysSince(this DateTime date1, DateTime date2)
         {
             TimeSpan difference = date1 - date2;

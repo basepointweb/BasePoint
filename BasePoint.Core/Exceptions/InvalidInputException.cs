@@ -1,4 +1,5 @@
-﻿using BasePoint.Core.Shared;
+﻿using BasePoint.Core.Extensions;
+using BasePoint.Core.Shared;
 
 namespace BasePoint.Core.Exceptions
 {
@@ -22,6 +23,11 @@ namespace BasePoint.Core.Exceptions
         {
             if (condition)
                 throw new InvalidInputException(message);
+        }
+
+        public static void ThrowIfNullOrEmpty<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(enumerable.IsNullOrEmpty(), message);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace BasePoint.Core.Extensions
 
         public static DayOfWeek LastDay(this DayOfWeek dayOfWeek)
         {
-            return (DayOfWeek)dayOfWeek.CyclingLastValue<DayOfWeek>();
+            return (DayOfWeek)dayOfWeek.CyclingPreviousValue<DayOfWeek>();
         }
 
         public static int DaysToNext(this DayOfWeek dayOfWeek, DayOfWeek nextDay)

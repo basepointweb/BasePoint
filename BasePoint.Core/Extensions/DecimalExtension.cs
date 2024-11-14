@@ -95,7 +95,7 @@ namespace BasePoint.Core.Extensions
             return (value >= initialValue) && (value <= finalValue);
         }
 
-        public static bool RoundedEqualsTo(this decimal value1, decimal value2, int decimalPlaces = 2)
+        public static bool RoundedEquals(this decimal value1, decimal value2, int decimalPlaces = 2)
         {
             return (Math.Round(value1, decimalPlaces) == Math.Round(value2, decimalPlaces));
         }
@@ -135,13 +135,13 @@ namespace BasePoint.Core.Extensions
             return installments;
         }
 
-        public static decimal CalculateCompoundInterestMonthly(this decimal principal, decimal monthlyRate, int months)
+        public static decimal CompoundInterestMonthly(this decimal principal, decimal monthlyRate, int months)
         {
             double compoundFactor = Math.Pow((double)(Constants.AHundredPercent + monthlyRate), months);
             return principal * (decimal)compoundFactor;
         }
 
-        public static decimal CalculateCompoundInterestYearly(this decimal principal, decimal annualRate, int years, int timesCompounded = 12)
+        public static decimal CompoundInterestYearly(this decimal principal, decimal annualRate, int years, int timesCompounded = 12)
         {
             double compoundFactor = Math.Pow((double)(Constants.AHundredPercent + annualRate) / timesCompounded, timesCompounded * years);
             return principal * (decimal)compoundFactor;

@@ -51,10 +51,10 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return values.First();
 
-            return values[currentIndex + Constants.QuantityOne];
+            return values[currentIndex++];
         }
 
-        public static Enum CyclingLastValue<T>(this Enum enumValue) where T : Enum
+        public static Enum CyclingPreviousValue<T>(this Enum enumValue) where T : Enum
         {
             Type type = enumValue.GetType();
 

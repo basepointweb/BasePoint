@@ -5,11 +5,11 @@
         public static readonly char ErrorMessageSeparator = ';';
         public static readonly int ZeroBasedFirstIndex = 0;
         public static readonly int FirstIndex = 1;
+        public static readonly int Zero = 0;
         public static readonly int QuantityZero = 0;
         public static readonly int QuantityOne = 1;
         public static readonly int QuantityMinusOne = -1;
         public static readonly int DaysInAWeek = 7;
-        public static readonly int DaysInAMonth = 7;
         public static readonly string StringSpace = " ";
         public static readonly char CharSpace = ' ';
         public static readonly char CharComma = ',';

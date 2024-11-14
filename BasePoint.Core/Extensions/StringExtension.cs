@@ -68,6 +68,20 @@ namespace BasePoint.Core.Extensions
             return result;
         }
 
+        public static string CapitalizeEachWordFirstLetter(this string text)
+        {
+            var wordSeparators = new char[] { Constants.CharSpace, Constants.CharTab, Constants.CharEnter };
+
+            var phrase = text.Split(wordSeparators, StringSplitOptions.RemoveEmptyEntries);
+
+            for (var wordIndex = Constants.ZeroBasedFirstIndex; wordIndex < phrase.Length; wordIndex++)
+            {
+                phrase[wordIndex] = CapitalizeFirstLetter(phrase[wordIndex]);
+            }
+
+            return string.Join(Constants.CharSpace, phrase);
+        }
+
         public static string CapitalizeFirstLetter(this string text)
         {
             if (string.IsNullOrWhiteSpace(text))

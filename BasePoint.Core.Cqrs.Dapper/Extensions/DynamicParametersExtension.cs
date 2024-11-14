@@ -1,11 +1,40 @@
 ﻿using BasePoint.Core.Domain.Entities.Interfaces;
 using Dapper;
+using Newtonsoft.Json;
 using System.Data;
 
 namespace BasePoint.Core.Cqrs.Dapper.Extensions
 {
     public static class DynamicParametersExtension
     {
+        public static void AddAsJson<T>(this DynamicParameters parameters, string parameterName, T parameterValue, JsonSerializerSettings settings = null) where T : class
+        {
+            if (parameterValue is null)
+                parameters.Add(parameterName, DBNull.Value);
+            else
+            {
+                var jsonString = JsonConvert.SerializeObject(
+                    parameterValue,
+                    settings);
+
+                parameters.Add(parameterName, jsonString, size: jsonString.Length);
+            }
+        }
+
+        public static void AddAsJson<T>(this DynamicParameters parameters, string parameterName, T? parameterValue, JsonSerializerSettings settings = null) where T : struct
+        {
+            if (!parameterValue.HasValue)
+                parameters.Add(parameterName, DBNull.Value);
+            else
+            {
+                var jsonString = JsonConvert.SerializeObject(
+                    parameterValue,
+                    settings);
+
+                parameters.Add(parameterName, jsonString, size: jsonString.Length);
+            }
+        }
+
         public static void AddNullable<T>(this DynamicParameters parameters, string parameterName, T? parameterValue, int? size = null) where T : struct
         {
             if (!parameterValue.HasValue)

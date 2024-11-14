@@ -3,8 +3,40 @@ using System.Linq.Expressions;
 
 namespace BasePoint.Core.Extensions
 {
+    public record GroupingResult<T>
+    {
+        public int DistinctCount { get; init; }
+        public int TotalItems { get; init; }
+        public T MaxItem { get; init; }
+        public T MinItem { get; init; }
+    }
+
     public static class EnumerableExtension
     {
+        public static GroupingResult<T> Grouping<T>(
+            this IEnumerable<T> source,
+            params Expression<Func<T, object>>[] keySelectors)
+        {
+            var distinctItems = source.Select(item =>
+                keySelectors.Select(selector => selector.Compile()(item)).ToList()).Distinct();
+
+            return new GroupingResult<T>
+            {
+                DistinctCount = distinctItems.Count(),
+                TotalItems = source.Count(),
+                MaxItem = source.Max(),
+                MinItem = source.Min()
+            };
+        }
+
+        public static Dictionary<T, int> FrequencyDistribution<T>(
+            this IEnumerable<T> source)
+        {
+            return source
+             .GroupBy(item => item)
+             .ToDictionary(g => g.Key, g => g.Count());
+        }
+
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             foreach (T element in source)
@@ -46,7 +78,7 @@ namespace BasePoint.Core.Extensions
 
         public static int LastIndex<T>(this IEnumerable<T> source)
         {
-            return source?.Count().ToZeroBasedIndex() ?? Constants.QuantityMinusOne;
+            return source.IsNullOrEmpty() ? Constants.QuantityMinusOne : source.Count().ToZeroBasedIndex();
         }
     }
 }

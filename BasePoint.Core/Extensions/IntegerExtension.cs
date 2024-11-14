@@ -13,5 +13,10 @@ namespace BasePoint.Core.Extensions
         {
             return integerValue + Constants.QuantityOne;
         }
+
+        public static bool IsEven(this int integerValue)
+        {
+            return (integerValue % 2 == Constants.Zero);
+        }
     }
 }
