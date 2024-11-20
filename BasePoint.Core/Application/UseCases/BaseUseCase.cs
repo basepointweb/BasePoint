@@ -1,5 +1,5 @@
-﻿using BasePoint.Core.Shared;
-using BasePoint.Core.Exceptions;
+﻿using BasePoint.Core.Exceptions;
+using BasePoint.Core.Shared;
 
 namespace BasePoint.Core.Application.UseCases
 {
@@ -37,7 +37,7 @@ namespace BasePoint.Core.Application.UseCases
                 if (ex.Errors.Any())
                     output = CreateOutputWithErrors(ex.Errors.Select(e => new ErrorMessage(e.ErrorMessage)).ToList());
                 else
-                    output = CreateOutputWithErrors([new(ex.Message)]);
+                    output = CreateOutputWithErrors([new($"Error message: {ex.Message}\nCall Stack: {ex.StackTrace}")]);
 
             }
             catch (BaseException ex)
@@ -46,7 +46,7 @@ namespace BasePoint.Core.Application.UseCases
             }
             catch (Exception ex)
             {
-                output = CreateOutputWithErrors([new(ex.Message)]);
+                output = CreateOutputWithErrors([new($"Error message: {ex.Message}\nCall Stack: {ex.StackTrace}")]);
             }
 
             return output;

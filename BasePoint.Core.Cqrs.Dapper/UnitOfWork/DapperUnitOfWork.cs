@@ -1,12 +1,13 @@
 ﻿using BasePoint.Core.UnitOfWork;
 using System.Data;
+using System.Transactions;
 
 namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
 {
     public class DapperUnitOfWork : BaseUnitOfWork
     {
         private readonly IDbConnection _connection;
-        private IDbTransaction _transaction;
+        private TransactionScope _transactionScope;
 
         public DapperUnitOfWork(IDbConnection connection) : base()
         {
@@ -22,7 +23,8 @@ namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
             if (_connection.State != System.Data.ConnectionState.Open)
                 _connection.Open();
 
-            _transaction = _connection.BeginTransaction();
+            if (_transactionScope is null)
+                _transactionScope = new TransactionScope();
 
             return await base.BeforeSaveAsync();
         }
@@ -32,14 +34,23 @@ namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
             await base.AfterSave(sucess);
 
             if (sucess)
-                _transaction.Commit();
+                _transactionScope.Complete();
+            else
+            {
+                _transactionScope.Dispose();
+                _transactionScope = null;
+            }
 
             return sucess;
         }
 
         public override async Task AfterRollBackAsync()
         {
-            _transaction.Rollback();
+            if (_transactionScope is null)
+            {
+                _transactionScope.Dispose();
+                _transactionScope = null;
+            }
 
             await base.AfterRollBackAsync();
         }

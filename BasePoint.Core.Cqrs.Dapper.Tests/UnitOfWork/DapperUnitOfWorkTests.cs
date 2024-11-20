@@ -8,12 +8,10 @@ namespace BasePoint.Core.Cqrs.Dapper.Tests.UnitOfWork
     public class DapperUnitOfWorkTests
     {
         private readonly Mock<IDbConnection> _connection;
-        private readonly Mock<IDbTransaction> _transaction;
         private readonly DapperUnitOfWork _unitOfWork;
         public DapperUnitOfWorkTests()
         {
             _connection = new Mock<IDbConnection>();
-            _transaction = new Mock<IDbTransaction>();
 
             _unitOfWork = new DapperUnitOfWork(_connection.Object);
         }
@@ -38,7 +36,6 @@ namespace BasePoint.Core.Cqrs.Dapper.Tests.UnitOfWork
         public async Task AfterSave_WhenParameterSuccessIsTrue_CallTransactionCommit()
         {
             //Arrange
-            _connection.Setup(x => x.BeginTransaction()).Returns(_transaction.Object);
             _connection.Setup(x => x.State).Returns(ConnectionState.Closed);
 
             await _unitOfWork.BeforeSaveAsync();
@@ -48,14 +45,12 @@ namespace BasePoint.Core.Cqrs.Dapper.Tests.UnitOfWork
 
             //Assert
             _connection.Verify(x => x.Open(), Times.Once);
-            _transaction.Verify(x => x.Commit(), Times.Once);
         }
 
         [Fact]
         public async Task AfterSave_WhenParameterSuccessIsFalse_ShouldNotCallTransactionCommit()
         {
             //Arrange
-            _connection.Setup(x => x.BeginTransaction()).Returns(_transaction.Object);
             _connection.Setup(x => x.State).Returns(ConnectionState.Closed);
 
             await _unitOfWork.BeforeSaveAsync();
@@ -65,14 +60,12 @@ namespace BasePoint.Core.Cqrs.Dapper.Tests.UnitOfWork
 
             //Assert
             _connection.Verify(x => x.Open(), Times.Once);
-            _transaction.Verify(x => x.Commit(), Times.Never);
         }
 
         [Fact]
         public async Task AfterRollBack_Always_ShouldCallTransactionRollback()
         {
             //Arrange
-            _connection.Setup(x => x.BeginTransaction()).Returns(_transaction.Object);
             _connection.Setup(x => x.State).Returns(ConnectionState.Closed);
 
             await _unitOfWork.BeforeSaveAsync();
@@ -81,7 +74,6 @@ namespace BasePoint.Core.Cqrs.Dapper.Tests.UnitOfWork
             await _unitOfWork.AfterRollBackAsync();
 
             //Assert
-            _transaction.Verify(x => x.Rollback(), Times.Once);
         }
     }
 }
