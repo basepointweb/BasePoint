@@ -34,12 +34,12 @@ namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
             await base.AfterSave(sucess);
 
             if (sucess)
-                _transactionScope.Complete();
-            else
             {
-                _transactionScope.Dispose();
-                _transactionScope = null;
+                _transactionScope.Complete();
             }
+
+            _transactionScope.Dispose();
+            _transactionScope = null;
 
             return sucess;
         }
