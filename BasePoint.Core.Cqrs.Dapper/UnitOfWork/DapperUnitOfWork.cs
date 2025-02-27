@@ -1,6 +1,6 @@
-﻿using BasePoint.Core.UnitOfWork;
-using System.Data;
+﻿using System.Data;
 using System.Transactions;
+using BasePoint.Core.UnitOfWork;
 
 namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
 {
@@ -24,7 +24,7 @@ namespace BasePoint.Core.Cqrs.Dapper.UnitOfWork
                 _connection.Open();
 
             if (_transactionScope is null)
-                _transactionScope = new TransactionScope();
+                _transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
             return await base.BeforeSaveAsync();
         }

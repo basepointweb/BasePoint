@@ -39,6 +39,7 @@ namespace BasePoint.Core.Tests.Application.UseCases.SampleUseCases
 
             await SaveChangesAsync();
 
+
             return CreateSuccessOutput(new SampleChildUseCaseOutput()
             {
                 SampleId = entity.Id,

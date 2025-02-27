@@ -21,6 +21,9 @@
         public static readonly TimeSpan DefaultApiTokenExpirationInMinutes = TimeSpan.FromMinutes(5);
         public static readonly decimal HandredBasedAHundredPercent = 100;
         public static readonly decimal AHundredPercent = 1;
+        public static readonly int ComparisonEquals = 0;
+        public static readonly int ComparisonLessThan = -1;
+        public static readonly int ComparisonGreaterThan = 1;
 
         public static class ErrorCodes
         {

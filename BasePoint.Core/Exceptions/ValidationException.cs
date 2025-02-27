@@ -1,5 +1,6 @@
 ﻿using BasePoint.Core.Extensions;
 using BasePoint.Core.Shared;
+using System.Linq.Expressions;
 
 namespace BasePoint.Core.Exceptions
 {
@@ -29,6 +30,16 @@ namespace BasePoint.Core.Exceptions
         public static void ThrowIfNullOrEmpty<T>(IEnumerable<T> enumerable, string message)
         {
             ThrowIf(enumerable.IsNullOrEmpty(), message);
+        }
+
+        public static void ThrowIfNotEmpty<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(!enumerable.IsNullOrEmpty(), message);
+        }
+
+        public static void ThrowIfHasDuplicates<T, TKey>(IEnumerable<T> enumerable, string message, params Expression<Func<T, TKey>>[] keySelectors)
+        {
+            ThrowIf(enumerable.HasDuplicates(keySelectors), message);
         }
 
         public static void ThrowIfNull(object inputObject, string message)

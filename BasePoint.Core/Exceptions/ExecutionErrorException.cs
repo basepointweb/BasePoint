@@ -30,6 +30,11 @@ namespace BasePoint.Core.Exceptions
             ThrowIf(enumerable.IsNullOrEmpty(), message);
         }
 
+        public static void ThrowIfNotEmpty<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(!enumerable.IsNullOrEmpty(), message);
+        }
+
         public static void ThrowIfNull(object inputObject, string message)
         {
             ThrowIf(inputObject is null, message);

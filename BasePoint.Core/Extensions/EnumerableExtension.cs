@@ -80,5 +80,47 @@ namespace BasePoint.Core.Extensions
         {
             return source.IsNullOrEmpty() ? Constants.QuantityMinusOne : source.Count().ToZeroBasedIndex();
         }
+
+        public static void RoundProperty<T>(this IEnumerable<T> source, Expression<Func<T, decimal>> propertyExpression, int decimals = 2)
+        {
+            ArgumentNullException.ThrowIfNull(source, nameof(source));
+            ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
+
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+                throw new ArgumentException("The expression must reference a property.");
+
+            var propertyInfo = memberExpression.Member as System.Reflection.PropertyInfo;
+            if (propertyInfo == null || !propertyInfo.CanWrite)
+                throw new InvalidOperationException("The property must be of type decimal and have a public setter.");
+
+            foreach (var item in source)
+            {
+                var originalValue = (decimal)propertyInfo.GetValue(item);
+                var roundedValue = Math.Round(originalValue, decimals);
+                propertyInfo.SetValue(item, roundedValue);
+            }
+        }
+
+        public static IEnumerable<T> MinByAll<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
+            where TKey : IComparable<TKey>
+        {
+            if (source.IsNullOrEmpty())
+                return Enumerable.Empty<T>();
+
+            var minValue = source.Min(selector);
+
+            return source.Where(item => selector(item).CompareTo(minValue) == Constants.ComparisonEquals);
+        }
+
+        public static IEnumerable<T> MaxByAll<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
+            where TKey : IComparable<TKey>
+        {
+            if (source.IsNullOrEmpty())
+                return Enumerable.Empty<T>();
+
+            var maxValue = source.Max(selector);
+
+            return source.Where(item => selector(item).CompareTo(maxValue) == Constants.ComparisonEquals);
+        }
     }
 }
