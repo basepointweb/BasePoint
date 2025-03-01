@@ -35,7 +35,9 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return null;
 
-            return values[currentIndex++];
+            var nextIndex = currentIndex + 1;
+
+            return values[nextIndex];
         }
 
         public static Enum CyclingNextValue<T>(this Enum enumValue) where T : Enum
@@ -51,7 +53,9 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return values.First();
 
-            return values[currentIndex++];
+            var nextIndex = currentIndex + 1;
+
+            return values[nextIndex];
         }
 
         public static Enum CyclingPreviousValue<T>(this Enum enumValue) where T : Enum

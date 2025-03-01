@@ -1,6 +1,7 @@
 ﻿using BasePoint.Core.Shared;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BasePoint.Core.Extensions
 {
@@ -101,6 +102,27 @@ namespace BasePoint.Core.Extensions
                 .Length;
 
             return wordCount;
+        }
+
+        public static string[] SubstringsBetween(this string str, string delimiterString)
+        {
+            return SubstringsBetween(str, delimiterString, delimiterString);
+        }
+
+        public static string[] SubstringsBetween(this string str, string initialString, string finalString)
+        {
+            var substrings = new List<string>();
+
+            string pattern = $@"(?<=\{initialString})(.*?)(?=\{finalString})";
+
+            MatchCollection matches = Regex.Matches(str, pattern);
+
+            foreach (Match match in matches)
+            {
+                substrings.Add(match.Groups[1].Value);
+            }
+
+            return substrings.ToArray();
         }
     }
 }

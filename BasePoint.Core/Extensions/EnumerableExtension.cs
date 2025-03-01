@@ -101,7 +101,7 @@ namespace BasePoint.Core.Extensions
             }
         }
 
-        public static IEnumerable<T> MinByAll<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
+        public static IEnumerable<T> AllMinBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
             where TKey : IComparable<TKey>
         {
             if (source.IsNullOrEmpty())
@@ -112,7 +112,7 @@ namespace BasePoint.Core.Extensions
             return source.Where(item => selector(item).CompareTo(minValue) == Constants.ComparisonEquals);
         }
 
-        public static IEnumerable<T> MaxByAll<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
+        public static IEnumerable<T> AllMaxBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> selector)
             where TKey : IComparable<TKey>
         {
             if (source.IsNullOrEmpty())
