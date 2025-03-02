@@ -8,7 +8,6 @@ namespace BasePoint.Core.Tests.Domain.Entities
     {
         public virtual string SampleName { get; set; }
         public decimal MonthlySalary { get; protected set; }
-
         public void SetMonthlySalary(decimal monthlySalary)
         {
             if (monthlySalary <= decimal.Zero)

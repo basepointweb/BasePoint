@@ -35,5 +35,16 @@
                         ((propertyValue != null) && (currentValue != null) &&
                         (!propertyValue.Equals(currentValue))));
         }
+
+        public static object Coalesce(IEnumerable<object> values)
+        {
+            foreach (var value in values)
+            {
+                if (value != null)
+                    return value;
+            }
+
+            return default;
+        }
     }
 }

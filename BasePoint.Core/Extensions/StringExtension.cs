@@ -122,7 +122,103 @@ namespace BasePoint.Core.Extensions
                 substrings.Add(match.Groups[1].Value);
             }
 
-            return substrings.ToArray();
+            return [.. substrings];
+        }
+
+
+        public static string[] SplitBySize(this string str, int partsSize, bool smallerPartInTheEndWhenIsOddCharsNumber = true)
+        {
+            var parts = new List<string>();
+
+            if (partsSize <= Constants.QuantityZero || str.IsEmpty())
+                return [.. parts];
+
+            ArgumentOutOfRangeException.ThrowIfLessThan(str.Length, partsSize, "The size must be less than or equals to string length");
+
+            var remainingString = str;
+
+            if (smallerPartInTheEndWhenIsOddCharsNumber)
+            {
+                while (!remainingString.IsEmpty())
+                {
+                    var subStringSize = partsSize > remainingString.Length ? remainingString.Length : partsSize;
+
+                    var subString = remainingString.Substring(Constants.ZeroBasedFirstIndex, subStringSize);
+
+                    parts.Add(subString);
+
+                    remainingString = remainingString.Substring(subStringSize);
+                }
+            }
+            else
+            {
+                while (!remainingString.IsEmpty())
+                {
+                    var subStringSize = partsSize > remainingString.Length ? remainingString.Length : partsSize;
+
+                    var subString = remainingString.Substring(remainingString.Length - subStringSize);
+
+                    parts.Insert(Constants.ZeroBasedFirstIndex, subString);
+
+                    remainingString = remainingString.Substring(Constants.ZeroBasedFirstIndex, remainingString.Length - subStringSize);
+                }
+            }
+
+            return [.. parts];
+        }
+
+        public static int ParseSubstringAsInt(this string str, int startIndex)
+        {
+            var stringValue = str.Substring(startIndex);
+
+            int.TryParse(stringValue, out int result);
+
+            return result;
+        }
+
+        public static int ParseSubstringAsInt(this string str, int startIndex, int length)
+        {
+            var stringValue = str.Substring(startIndex, length);
+
+            int.TryParse(stringValue, out int result);
+
+            return result;
+        }
+
+        public static decimal ParseSubstringAsDecimal(this string str, int startIndex, int length)
+        {
+            var stringValue = str.Substring(startIndex, length);
+
+            decimal.TryParse(stringValue, out decimal result);
+
+            return result;
+        }
+
+        public static decimal ParseSubstringAsDecimal(this string str, int startIndex)
+        {
+            var stringValue = str.Substring(startIndex);
+
+            decimal.TryParse(stringValue, out decimal result);
+
+            return result;
+        }
+
+        public static DateTime ParseSubstringAsDateTime(this string str, int startIndex, int length)
+        {
+            var stringValue = str.Substring(startIndex, length);
+
+            DateTime.TryParse(stringValue, out DateTime result);
+
+            return result;
+        }
+
+        public static DateTime ParseSubstringAsDateTime(this string str, int startIndex)
+        {
+            var stringValue = str.Substring(startIndex);
+
+            DateTime.TryParse(stringValue, out DateTime result);
+
+            return result;
         }
     }
 }
