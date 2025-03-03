@@ -117,7 +117,7 @@ namespace BasePoint.Core.Extensions
             {
                 installments.Add(installmentValue + residualValue);
 
-                for (int i = 1; i < numberOfInstallments; i++)
+                for (int i = Constants.ZeroBasedSecondIndex; i < numberOfInstallments; i++)
                 {
                     installments.Add(installmentValue);
                 }

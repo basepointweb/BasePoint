@@ -41,5 +41,33 @@
         {
             return yesNoValue == "Yes";
         }
+
+        public static bool AnyTrue(params bool[] values)
+        {
+            var anyTrue = values.Any(x => x);
+
+            return anyTrue;
+        }
+
+        public static bool AnyFalse(params bool[] values)
+        {
+            var anyTrue = values.Any(x => !x);
+
+            return anyTrue;
+        }
+
+        public static bool AllTrue(params bool[] values)
+        {
+            var falseItems = values.Where(x => x);
+
+            return falseItems.Count() == values.Length;
+        }
+
+        public static bool AllFalse(params bool[] values)
+        {
+            var falseItems = values.Where(x => !x);
+
+            return falseItems.Count() == values.Length;
+        }
     }
 }

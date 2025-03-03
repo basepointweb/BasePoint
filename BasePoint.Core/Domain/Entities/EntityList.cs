@@ -1,5 +1,6 @@
 ﻿using BasePoint.Core.Domain.Entities.Interfaces;
 using BasePoint.Core.Domain.Enumerators;
+using BasePoint.Core.Extensions;
 using BasePoint.Core.Shared;
 using System.Collections;
 
@@ -108,13 +109,13 @@ namespace BasePoint.Core.Domain.Entities
         public bool HasMissingEntities(IEnumerable<Guid> entityIds)
         {
             return _items
-                .Select(x => x.Id)
+                .SafeSelect(x => x.Id)
                 .Any(item => !entityIds.Contains(item));
         }
 
         public bool HasMissingEntities(IEnumerable<Entity> items)
         {
-            return HasMissingEntities(items.Select(x => x.Id));
+            return HasMissingEntities(items.SafeSelect(x => x.Id));
         }
 
         public void CopyTo(Entity[] array, int arrayIndex)
@@ -194,10 +195,7 @@ namespace BasePoint.Core.Domain.Entities
         {
             get
             {
-                List<Entity> allItems = new();
-
-                allItems.AddRange(_deletedItems);
-                allItems.AddRange(_items);
+                List<Entity> allItems = [.. _deletedItems, .. _items];
 
                 return allItems;
             }

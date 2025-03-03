@@ -33,14 +33,14 @@ namespace BasePoint.Core.Extensions
 
         public static string ShortestString(this IEnumerable<string> stringValues)
         {
-            return stringValues.Select(x => (x, x.Length))
+            return stringValues.SafeSelect(x => (x, x.Length))
                 .OrderByDescending(x => x.Length)
                 .First().x;
         }
 
         public static string LongestString(this IEnumerable<string> stringValues)
         {
-            return stringValues.Select(x => (x, x.Length))
+            return stringValues.SafeSelect(x => (x, x.Length))
                 .OrderBy(x => x.Length)
                 .First().x;
         }

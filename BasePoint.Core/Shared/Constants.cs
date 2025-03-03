@@ -4,6 +4,7 @@
     {
         public static readonly char ErrorMessageSeparator = ';';
         public static readonly int ZeroBasedFirstIndex = 0;
+        public static readonly int ZeroBasedSecondIndex = 1;
         public static readonly int FirstIndex = 1;
         public static readonly int Zero = 0;
         public static readonly int QuantityZero = 0;
@@ -24,6 +25,7 @@
         public static readonly int ComparisonEquals = 0;
         public static readonly int ComparisonLessThan = -1;
         public static readonly int ComparisonGreaterThan = 1;
+        public static readonly int EvenDivisor = 2;
 
         public static class ErrorCodes
         {

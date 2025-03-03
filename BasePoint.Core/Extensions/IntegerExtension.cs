@@ -16,7 +16,7 @@ namespace BasePoint.Core.Extensions
 
         public static bool IsEven(this int integerValue)
         {
-            return (integerValue % 2 == Constants.Zero);
+            return (integerValue % Constants.EvenDivisor == Constants.Zero);
         }
 
         public static List<int> SplitIntoBalancedParts(this int number, int parts)
@@ -28,10 +28,10 @@ namespace BasePoint.Core.Extensions
             int baseValue = number / parts;
             int remainder = number % parts;
 
-            for (int i = 0; i < parts; i++)
+            for (int i = Constants.ZeroBasedFirstIndex; i < parts; i++)
             {
                 if (i < remainder)
-                    result.Add(baseValue + 1);
+                    result.Add(baseValue + Constants.QuantityOne);
                 else
                     result.Add(baseValue);
             }

@@ -1,4 +1,5 @@
 ﻿using BasePoint.Core.Exceptions;
+using BasePoint.Core.Extensions;
 using BasePoint.Core.Shared;
 
 namespace BasePoint.Core.Application.UseCases
@@ -35,7 +36,7 @@ namespace BasePoint.Core.Application.UseCases
             catch (FluentValidation.ValidationException ex)
             {
                 if (ex.Errors.Any())
-                    output = CreateOutputWithErrors(ex.Errors.Select(e => new ErrorMessage(e.ErrorMessage)).ToList());
+                    output = CreateOutputWithErrors(ex.Errors.SafeSelect(e => new ErrorMessage(e.ErrorMessage)).ToList());
                 else
                     output = CreateOutputWithErrors([new($"Error message: {ex.Message}\nCall Stack: {ex.StackTrace}")]);
 

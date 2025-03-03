@@ -17,8 +17,8 @@ namespace BasePoint.Core.Extensions
             this IEnumerable<T> source,
             params Expression<Func<T, object>>[] keySelectors)
         {
-            var distinctItems = source.Select(item =>
-                keySelectors.Select(selector => selector.Compile()(item)).ToList()).Distinct();
+            var distinctItems = source.SafeSelect(item =>
+                keySelectors.SafeSelect(selector => selector.Compile()(item)).ToList()).Distinct();
 
             return new GroupingResult<T>
             {

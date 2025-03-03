@@ -35,7 +35,7 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return null;
 
-            var nextIndex = currentIndex + 1;
+            var nextIndex = currentIndex + Constants.QuantityOne;
 
             return values[nextIndex];
         }
@@ -53,7 +53,7 @@ namespace BasePoint.Core.Extensions
             if (currentIndex >= values.Count.ToZeroBasedIndex())
                 return values.First();
 
-            var nextIndex = currentIndex + 1;
+            var nextIndex = currentIndex + Constants.QuantityOne;
 
             return values[nextIndex];
         }
