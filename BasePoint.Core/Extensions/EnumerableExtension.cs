@@ -81,6 +81,36 @@ namespace BasePoint.Core.Extensions
             return source.IsNullOrEmpty() ? Constants.QuantityMinusOne : source.Count().ToZeroBasedIndex();
         }
 
+        public static IEnumerable<T> WherePropertyIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
+        {
+            return WherePropertyIn(source, propertySelector, values.AsEnumerable());
+        }
+
+        public static IEnumerable<T> WherePropertyIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
+        {
+
+            if (source == null || propertySelector == null || values == null)
+                return Enumerable.Empty<T>();
+
+            HashSet<TKey> valueSet = new HashSet<TKey>(values);
+            return source.Where(item => valueSet.Contains(propertySelector(item)));
+        }
+
+        public static IEnumerable<T> WherePropertyNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
+        {
+            return WherePropertyIn(source, propertySelector, values.AsEnumerable());
+        }
+
+        public static IEnumerable<T> WherePropertyNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
+        {
+
+            if (source == null || propertySelector == null || values == null)
+                return Enumerable.Empty<T>();
+
+            HashSet<TKey> valueSet = new HashSet<TKey>(values);
+            return source.Where(item => !valueSet.Contains(propertySelector(item)));
+        }
+
         public static void RoundProperty<T>(this IEnumerable<T> source, Expression<Func<T, decimal>> propertyExpression, int decimals = 2)
         {
             ArgumentNullException.ThrowIfNull(source, nameof(source));
