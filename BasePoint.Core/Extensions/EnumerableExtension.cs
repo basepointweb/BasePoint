@@ -81,12 +81,12 @@ namespace BasePoint.Core.Extensions
             return source.IsNullOrEmpty() ? Constants.QuantityMinusOne : source.Count().ToZeroBasedIndex();
         }
 
-        public static IEnumerable<T> WherePropertyIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
+        public static IEnumerable<T> WhereIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
         {
-            return WherePropertyIn(source, propertySelector, values.AsEnumerable());
+            return WhereIn(source, propertySelector, values.AsEnumerable());
         }
 
-        public static IEnumerable<T> WherePropertyIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
+        public static IEnumerable<T> WhereIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
         {
 
             if (source == null || propertySelector == null || values == null)
@@ -96,12 +96,12 @@ namespace BasePoint.Core.Extensions
             return source.Where(item => valueSet.Contains(propertySelector(item)));
         }
 
-        public static IEnumerable<T> WherePropertyNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
+        public static IEnumerable<T> WhereNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
         {
-            return WherePropertyIn(source, propertySelector, values.AsEnumerable());
+            return WhereIn(source, propertySelector, values.AsEnumerable());
         }
 
-        public static IEnumerable<T> WherePropertyNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
+        public static IEnumerable<T> WhereNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)
         {
 
             if (source == null || propertySelector == null || values == null)

@@ -44,6 +44,15 @@ namespace BasePoint.Core.Tests.Extensions
         }
 
         [Theory]
+        [InlineData("NULLABLE<CHAR>", "CHAR")]
+        public void SubstringsBetween_DelimiterAreDifferent_ReturnListOfStrings(string inputString, string expectedString)
+        {
+            var resultStrings = inputString.SubstringsBetween("NULLABLE<", ">");
+
+            resultStrings.Should().HaveCount(1);
+        }
+
+        [Theory]
         [InlineData("12345", 0, "")]
         [InlineData("", 1, "")]
         [InlineData("12345", 1, "1,2,3,4,5")]

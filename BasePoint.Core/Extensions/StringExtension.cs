@@ -113,13 +113,16 @@ namespace BasePoint.Core.Extensions
         {
             var substrings = new List<string>();
 
-            string pattern = $@"(?<=\{initialString})(.*?)(?=\{finalString})";
+            string escapedInitial = Regex.Escape(initialString);
+            string escapedFinal = Regex.Escape(finalString);
+
+            string pattern = $@"(?<={escapedInitial})(.*?)(?={escapedFinal})";
 
             MatchCollection matches = Regex.Matches(str, pattern);
 
             foreach (Match match in matches)
             {
-                substrings.Add(match.Groups[1].Value);
+                substrings.Add(match.Value);
             }
 
             return [.. substrings];
