@@ -4,7 +4,7 @@ namespace BasePoint.Core.Shared
 {
     public class ValidationFailureBuilder
     {
-        public ValidationFailure Build(string validationMessage)
+        public static ValidationFailure Build(string validationMessage)
         {
             return ConvertMessageToErrorMessage(validationMessage);
         }
