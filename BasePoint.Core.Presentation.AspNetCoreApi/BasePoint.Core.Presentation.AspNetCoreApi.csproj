@@ -6,12 +6,20 @@
     <PackageTags>CleanArchitecture,Presentation,AspNet.Core</PackageTags>
     <RepositoryUrl>https://github.com/basepointweb/BasePoint</RepositoryUrl>
     <Authors>Elias Silva</Authors>
-    <Version>0.0.9</Version>
+    <Version>0.0.10</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
 	<Title>BasePoint.Core.Presentation.AspNetCoreApi</Title>
 	<Description>A package to develop rest apis with AspNet.Core</Description>
+	<PackageIcon>BPIcon128x128.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\BasePoint.Flag\BPIcon128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
