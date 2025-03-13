@@ -106,6 +106,15 @@ namespace BasePoint.Core.Domain.Entities
             return _items.Any(item => item.Id == entityId);
         }
 
+        public bool ContainsAnotherWhith<TKey>(Entity currentEntity, Func<Entity, TKey> propertySelector)
+        {
+            if (propertySelector == null)
+                return false;
+
+            HashSet<TKey> valueSet = new HashSet<TKey>(_items.SafeSelect(propertySelector));
+            return _items.Any(item => item.Id != currentEntity.Id && valueSet.Contains(propertySelector(currentEntity)));
+        }
+
         public bool HasMissingEntities(IEnumerable<Guid> entityIds)
         {
             return _items

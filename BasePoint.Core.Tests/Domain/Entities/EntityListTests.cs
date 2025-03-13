@@ -1065,5 +1065,74 @@ namespace BasePoint.Core.Tests.Domain.Entities
             cloneList[3].Id.Should().NotBe(entity4.Id);
             cloneList[3].State.Should().Be(EntityState.New);
         }
+
+
+        [Fact]
+        public void ContainsAnotherWhith_GivenAnListWithItemsAndSearchAnotherItemWithName_ReturnsTrue()
+        {
+            // Arrange
+            var entity1 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+            var entity2 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+
+            var entityList = new EntityList<SampleEntity>()
+            {
+                entity1
+            };
+
+            entityList.ContainsAnotherWhith(entity2, x => x.SampleName).Should().BeTrue();
+        }
+
+        [Fact]
+        public void ContainsAnotherWhith_GivenAnListWithItemsAndSearchSameItemWithName_ReturnsFalse()
+        {
+            // Arrange
+            var entity1 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+            var entity2 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+
+            var entityList = new EntityList<SampleEntity>()
+            {
+                entity1
+            };
+
+            entityList.ContainsAnotherWhith(entity1, x => x.SampleName).Should().BeFalse();
+        }
+
+        [Fact]
+        public void ContainsAnotherWhith_GivenAnListWithItemsAndDoesNotExistsAnotherItemWithName_ReturnsFalse()
+        {
+            // Arrange
+            var entity1 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+            var entity2 = new SampleEntity()
+            {
+                SampleName = "Foo2"
+            };
+
+            var entityList = new EntityList<SampleEntity>()
+            {
+                entity1
+            };
+
+            entityList.ContainsAnotherWhith(entity2, x => x.SampleName).Should().BeFalse();
+        }
     }
 }

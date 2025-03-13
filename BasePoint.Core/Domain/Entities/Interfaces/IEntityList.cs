@@ -18,6 +18,8 @@
 
         bool ContainsWithId(Guid entityId);
 
+        bool ContainsAnotherWhith<TKey>(Entity currentEntity, Func<Entity, TKey> propertySelector);
+
         bool HasMissingEntities(IEnumerable<Guid> entityIds);
 
         bool HasMissingEntities(IEnumerable<Entity> items);
