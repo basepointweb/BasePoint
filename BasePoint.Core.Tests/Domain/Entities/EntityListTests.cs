@@ -1114,6 +1114,30 @@ namespace BasePoint.Core.Tests.Domain.Entities
         }
 
         [Fact]
+        public void ContainsAnotherWhith_GivenAnListWithItemsAndSearchItemWithDifferentName_ReturnsFalse()
+        {
+            // Arrange
+            var entity1 = new SampleEntity()
+            {
+                SampleName = "Foo"
+            };
+
+            var entity2 = new SampleEntity()
+            {
+                SampleName = "Foo2"
+            };
+
+            var entityList = new EntityList<SampleEntity>()
+            {
+                entity1,
+                entity2
+            };
+
+
+            entityList.ContainsAnotherWhith(entity1, x => x.SampleName).Should().BeFalse();
+        }
+
+        [Fact]
         public void ContainsAnotherWhith_GivenAnListWithItemsAndDoesNotExistsAnotherItemWithName_ReturnsFalse()
         {
             // Arrange

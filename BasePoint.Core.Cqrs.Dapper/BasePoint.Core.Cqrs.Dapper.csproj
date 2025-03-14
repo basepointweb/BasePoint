@@ -6,7 +6,7 @@
     <PackageTags>DDD,Cqrs,CommandStack,QueryStack</PackageTags>
     <RepositoryUrl>https://github.com/basepointweb/BasePoint</RepositoryUrl>
     <Authors>Elias Silva</Authors>
-    <Version>0.0.10</Version>
+    <Version>0.0.11</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>BasePoint.Core.Cqrs.Dapper</Title>
     <Description>A package to develop command stack layer using Dapper</Description>
@@ -28,7 +28,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="..\..\BasePoint.Flag\BPIcon128x128.png">
+    <None Update="BPIcon128x128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

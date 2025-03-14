@@ -46,5 +46,10 @@ namespace BasePoint.Core.Exceptions
         {
             ThrowIf(inputObject is null, message);
         }
+
+        public static void ThrowIfNotNull(object inputObject, string message)
+        {
+            ThrowIf(inputObject is not null, message);
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using BasePoint.Core.Domain.Entities.Interfaces;
+using BasePoint.Core.Domain.Entities.Users;
 using BasePoint.Core.Domain.Enumerators;
 using BasePoint.Core.Domain.Observer;
+using BasePoint.Core.Exceptions;
 using BasePoint.Core.Extensions;
+using BasePoint.Core.Shared;
 using LinFu.DynamicProxy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,8 +17,29 @@ namespace BasePoint.Core.Domain.Entities
         public virtual Guid Id { get; protected set; }
         public virtual EntityState State { get; protected set; }
         public virtual DateTime CreationDate { get; protected set; }
+        public virtual User CreationUser { get; protected set; }
+        public virtual DateTime? LastUpdateDate { get; protected set; }
+
+        public virtual User LastUpdateUser { get; protected set; }
         public virtual Dictionary<string, object> PersistedValues { get; protected set; }
         public virtual IList<IEntityObserver> Observers { get; protected set; }
+
+        public void SetCreationUser(User creationUser)
+        {
+            ValidationException.ThrowIfNotNull(CreationUser, Constants.ErrorMessages.CreationUserForEntityWasAlreadyGiven.Format(GetTypeName(), Id));
+
+            CreationUser = creationUser;
+        }
+
+        public void SetLastUpdateUser(User lastUpdateUser)
+        {
+            LastUpdateUser = lastUpdateUser;
+        }
+
+        public string GetTypeName()
+        {
+            return GetTypeName(GetType());
+        }
 
         public static string GetTypeName(Type type)
         {
@@ -177,6 +201,8 @@ namespace BasePoint.Core.Domain.Entities
             if (State.In(EntityState.Unchanged, EntityState.Persisted))
             {
                 State = EntityState.Updated;
+
+                LastUpdateDate = DateTime.UtcNow;
             }
         }
 

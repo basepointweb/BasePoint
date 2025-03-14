@@ -111,8 +111,8 @@ namespace BasePoint.Core.Domain.Entities
             if (propertySelector == null)
                 return false;
 
-            HashSet<TKey> valueSet = new HashSet<TKey>(_items.SafeSelect(propertySelector));
-            return _items.Any(item => item.Id != currentEntity.Id && valueSet.Contains(propertySelector(currentEntity)));
+            TKey currentValue = propertySelector(currentEntity);
+            return _items.Any(item => item.Id != currentEntity.Id && EqualityComparer<TKey>.Default.Equals(propertySelector(item), currentValue));
         }
 
         public bool HasMissingEntities(IEnumerable<Guid> entityIds)

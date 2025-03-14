@@ -6,7 +6,7 @@
     <PackageTags>CleanArchitecture,Presentation,AspNet.Core</PackageTags>
     <RepositoryUrl>https://github.com/basepointweb/BasePoint</RepositoryUrl>
     <Authors>Elias Silva</Authors>
-    <Version>0.0.10</Version>
+    <Version>0.0.11</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
 	<Title>BasePoint.Core.Presentation.AspNetCoreApi</Title>
@@ -15,18 +15,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\BasePoint.Flag\BPIcon128x128.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BasePoint.Core\BasePoint.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BPIcon128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

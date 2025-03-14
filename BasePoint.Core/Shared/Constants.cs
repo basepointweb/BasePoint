@@ -41,6 +41,7 @@
             public static readonly string EntityMappingError = "004;There mapping for entity {0} is invalid.";
             public static readonly string PageNumberMustBeGreaterThanOrEqualToOne = "005;Page number must be greater than or equal to one.";
             public static readonly string ItemsPerPageMustBeGreaterThanOrEqualToOne = "006;Items per page must be greater than or equal to one.";
+            public static readonly string CreationUserForEntityWasAlreadyGiven = "007;CreatedUser for the entity {0} with id {1} was already given";
         }
     }
 }
