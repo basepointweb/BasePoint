@@ -109,7 +109,7 @@ namespace BasePoint.Core.Cqrs.Dapper.EntityCommands
                     }
 
                     fieldsToInsert += tableColumnDefinition.DbFieldName;
-                    parameterNames += DAPPER_PARAMETER_INDICATOR + tableColumnDefinition.DbFieldName
+                    parameterNames += DAPPER_PARAMETER_INDICATOR + tableColumnDefinition.DbFieldName;
 
                     var objectValue = entityParameter.Value;
 
