@@ -109,9 +109,14 @@ namespace BasePoint.Core.Cqrs.Dapper.EntityCommands
                     }
 
                     fieldsToInsert += tableColumnDefinition.DbFieldName;
-                    parameterNames += DAPPER_PARAMETER_INDICATOR + tableColumnDefinition.DbFieldName;
+                    parameterNames += DAPPER_PARAMETER_INDICATOR + tableColumnDefinition.DbFieldName
 
-                    dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(entityParameter.Key, entityParameter.Value), size: tableColumnDefinition.Size);
+                    var objectValue = entityParameter.Value;
+
+                    if (objectValue is IBaseEntity)
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, (IBaseEntity)objectValue, size: tableColumnDefinition.Size);
+                    else
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(entityParameter.Key, entityParameter.Value), size: tableColumnDefinition.Size);
                 }
             }
 
@@ -152,7 +157,12 @@ namespace BasePoint.Core.Cqrs.Dapper.EntityCommands
 
                     fieldsToUpdate += tableColumnDefinition.DbFieldName + " = " + DAPPER_PARAMETER_INDICATOR + tableColumnDefinition.DbFieldName;
 
-                    dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(entityParameter.Key, entityParameter.Value), size: tableColumnDefinition.Size);
+                    var objectValue = entityParameter.Value;
+
+                    if (objectValue is IBaseEntity)
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, (IBaseEntity)objectValue, size: tableColumnDefinition.Size);
+                    else
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(entityParameter.Key, entityParameter.Value), size: tableColumnDefinition.Size);
                 }
             }
 
@@ -174,7 +184,12 @@ namespace BasePoint.Core.Cqrs.Dapper.EntityCommands
                     else
                         filterFieldNamesScript += tableColumnDefinition.DbFieldName + " is null";
 
-                    dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(filterCriteriaPart.Key, filterCriteriaPart.Value), size: tableColumnDefinition.Size);
+                    var objectValue = filterCriteriaPart.Value;
+
+                    if (objectValue is IBaseEntity)
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, (IBaseEntity)objectValue, size: tableColumnDefinition.Size);
+                    else
+                        dapperParameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(filterCriteriaPart.Key, filterCriteriaPart.Value), size: tableColumnDefinition.Size);
                 }
             }
 
@@ -331,7 +346,12 @@ namespace BasePoint.Core.Cqrs.Dapper.EntityCommands
                     else
                         filterFieldNamesScript += tableColumnDefinition.DbFieldName + " is null";
 
-                    parameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(filterCriteriaPart.Key, filterCriteriaPart.Value), size: tableColumnDefinition.Size);
+                    var objectValue = filterCriteriaPart.Value;
+
+                    if (objectValue is IBaseEntity)
+                        parameters.AddNullable(tableColumnDefinition.DbFieldName, (IBaseEntity)objectValue, size: tableColumnDefinition.Size);
+                    else
+                        parameters.AddNullable(tableColumnDefinition.DbFieldName, GetParameterValue(filterCriteriaPart.Key, filterCriteriaPart.Value), size: tableColumnDefinition.Size);
                 }
             }
 
