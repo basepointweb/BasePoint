@@ -77,16 +77,21 @@ namespace BasePoint.Core.Cqrs.Dapper.Extensions
 
         public static void AddNullable(this DynamicParameters parameters, string parameterName, object parameterValue, int? size = null)
         {
-            if (parameterValue is null)
-                parameters.Add(parameterName, DBNull.Value, size: size);
+            if (parameterValue is IBaseEntity)
+                AddNullable(parameters, parameterName, (IBaseEntity)parameterValue, size);
             else
             {
-                var parameterType = parameterValue.GetType();
-
-                if (parameterType.Name.ToUpper() == "STRING")
-                    parameters.Add(parameterName, parameterValue, DbType.AnsiString, size: size);
+                if (parameterValue is null)
+                    parameters.Add(parameterName, DBNull.Value, size: size);
                 else
-                    parameters.Add(parameterName, parameterValue, size: size);
+                {
+                    var parameterType = parameterValue.GetType();
+
+                    if (parameterType.Name.ToUpper() == "STRING")
+                        parameters.Add(parameterName, parameterValue, DbType.AnsiString, size: size);
+                    else
+                        parameters.Add(parameterName, parameterValue, size: size);
+                }
             }
         }
 
