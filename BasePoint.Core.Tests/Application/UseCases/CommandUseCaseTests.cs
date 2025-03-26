@@ -1,10 +1,11 @@
-﻿using BasePoint.Core.Shared;
-using BasePoint.Core.Extensions;
+﻿using BasePoint.Core.Extensions;
+using BasePoint.Core.Shared;
 using BasePoint.Core.Tests.Application.Dtos.Builders;
 using BasePoint.Core.Tests.Application.UseCases.SampleUseCases;
 using BasePoint.Core.Tests.Common;
 using BasePoint.Core.Tests.Domain.Entities;
 using BasePoint.Core.Tests.Domain.Repositories.SampleRepository;
+using BasePoint.Core.UnitOfWork;
 using BasePoint.Core.UnitOfWork.Interfaces;
 using FluentAssertions;
 using Moq;
@@ -43,7 +44,7 @@ namespace BasePoint.Core.Tests.Application.UseCases
                 .ReturnsAsync(sampleEntity);
 
             _unitOfWork.Setup(s => s.SaveChangesAsync())
-                .ReturnsAsync(true);
+                .ReturnsAsync(new UnitOfWorkResult(true, "Execution Success"));
 
             // Act
             var output = await _useCase.ExecuteAsync(input);
@@ -93,7 +94,7 @@ namespace BasePoint.Core.Tests.Application.UseCases
                 .ReturnsAsync(null as SampleEntity);
 
             _unitOfWork.Setup(s => s.SaveChangesAsync())
-                .ReturnsAsync(true);
+                .ReturnsAsync(new UnitOfWorkResult(true, "Execution Success"));
 
             // Act
             var output = await _useCase.ExecuteAsync(input);
@@ -123,7 +124,7 @@ namespace BasePoint.Core.Tests.Application.UseCases
                 .ReturnsAsync(sampleEntity);
 
             _unitOfWork.Setup(s => s.SaveChangesAsync())
-                .ReturnsAsync(false);
+                .ReturnsAsync(new UnitOfWorkResult(false, "Execution Error"));
 
             // Act
             var output = await _useCase.ExecuteAsync(input);

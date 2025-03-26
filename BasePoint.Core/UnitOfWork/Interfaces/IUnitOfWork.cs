@@ -6,7 +6,7 @@ namespace BasePoint.Core.UnitOfWork.Interfaces
     {
         void AddComand(IEntityCommand command);
 
-        Task<bool> SaveChangesAsync();
+        Task<UnitOfWorkResult> SaveChangesAsync();
 
         Task RollbackAsync();
 

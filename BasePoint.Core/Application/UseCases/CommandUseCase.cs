@@ -48,11 +48,13 @@ namespace BasePoint.Core.Application.UseCases
 
         protected virtual async Task SaveChangesAsync()
         {
-            if (!await UnitOfWork.SaveChangesAsync())
+            var result = await UnitOfWork.SaveChangesAsync();
+
+            if (!result.Success)
             {
                 await UnitOfWork.RollbackAsync();
 
-                throw new ExecutionErrorException(SaveChangesErrorMessage);
+                throw new ExecutionErrorException(result.Message);
             }
         }
     }

@@ -1,8 +1,8 @@
-﻿using BasePoint.Core.Shared;
-using BasePoint.Core.Cqrs.Dapper.Tests.Domain.Entities;
+﻿using BasePoint.Core.Cqrs.Dapper.Tests.Domain.Entities;
 using BasePoint.Core.Cqrs.Dapper.Tests.TableDefinitions;
 using BasePoint.Core.Domain.Enumerators;
 using BasePoint.Core.Exceptions;
+using BasePoint.Core.Shared;
 using Dapper;
 using FluentAssertions;
 using Moq;

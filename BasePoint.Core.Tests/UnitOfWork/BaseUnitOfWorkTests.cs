@@ -76,7 +76,7 @@ namespace BasePoint.Core.Tests.UnitOfWork
             //Assert
             _unitOfWork.Commands.Should().HaveCount(0);
             _entityComand.Verify(c => c.ExecuteAsync(), Times.Exactly(commandsCount));
-            expectedReturn.Should().BeTrue();
+            expectedReturn.Success.Should().BeTrue();
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace BasePoint.Core.Tests.UnitOfWork
             //Assert
             _unitOfWork.Commands.Should().HaveCount(0);
             _entityComand.Verify(c => c.ExecuteAsync(), Times.Exactly(commandsCount));
-            expectedReturn.Should().BeFalse();
+            expectedReturn.Success.Should().BeFalse();
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace BasePoint.Core.Tests.UnitOfWork
             //Assert
             _unitOfWork.Commands.Should().HaveCount(0);
             _entityComand.Verify(c => c.ExecuteAsync(), Times.Exactly(commandsCount));
-            expectedReturn.Should().BeFalse();
+            expectedReturn.Success.Should().BeFalse();
         }
 
         [Fact]

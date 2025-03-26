@@ -40,12 +40,13 @@ namespace BasePoint.Core.UnitOfWork
             await Task.FromResult(() => { });
         }
 
-        public virtual async Task<bool> SaveChangesAsync()
+        public virtual async Task<UnitOfWorkResult> SaveChangesAsync()
         {
             bool sucess = await BeforeSaveAsync();
+            var result = new UnitOfWorkResult(true, "Execute successfully.");
 
             if (!sucess)
-                return false;
+                return new UnitOfWorkResult(false, "Error while preparing changes to be saved.");
 
             try
             {
@@ -57,13 +58,20 @@ namespace BasePoint.Core.UnitOfWork
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 sucess = false;
+                result = new UnitOfWorkResult(false, $"Error to saving changes: {ex.Message}. StackTrace: {ex.StackTrace}");
             }
             finally
             {
-                sucess = sucess && await AfterSave(sucess);
+                if (sucess)
+                {
+                    sucess = await AfterSave(sucess);
+
+                    if (!sucess)
+                        result = new UnitOfWorkResult(false, "Error while executing post saving.");
+                }
 
                 if (sucess)
                     SetEntitiesPersistedState();
@@ -71,7 +79,7 @@ namespace BasePoint.Core.UnitOfWork
                 Commands.Clear();
             }
 
-            return sucess;
+            return result;
         }
         public abstract void Dispose();
 

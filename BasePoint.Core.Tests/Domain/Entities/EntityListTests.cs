@@ -2,6 +2,7 @@
 using BasePoint.Core.Domain.Enumerators;
 using BasePoint.Core.Tests.Application.Dtos.Builders;
 using FluentAssertions;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BasePoint.Core.Tests.Domain.Entities
@@ -1132,6 +1133,14 @@ namespace BasePoint.Core.Tests.Domain.Entities
                 entity1,
                 entity2
             };
+
+            var json = JsonConvert.SerializeObject(
+               entity1,
+               new JsonSerializerSettings
+               {
+                   TypeNameHandling = TypeNameHandling.Objects,
+                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+               });
 
 
             entityList.ContainsAnotherWhith(entity1, x => x.SampleName).Should().BeFalse();

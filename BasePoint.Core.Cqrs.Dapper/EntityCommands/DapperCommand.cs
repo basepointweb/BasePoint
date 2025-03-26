@@ -1,11 +1,11 @@
-﻿using BasePoint.Core.Shared;
-using BasePoint.Core.Cqrs.Dapper.Extensions;
+﻿using BasePoint.Core.Cqrs.Dapper.Extensions;
 using BasePoint.Core.Cqrs.Dapper.TableDefinitions;
 using BasePoint.Core.Domain.Cqrs;
 using BasePoint.Core.Domain.Entities.Interfaces;
 using BasePoint.Core.Domain.Enumerators;
 using BasePoint.Core.Exceptions;
 using BasePoint.Core.Extensions;
+using BasePoint.Core.Shared;
 using Dapper;
 using LinFu.DynamicProxy;
 using System.Data;
