@@ -98,7 +98,7 @@ namespace BasePoint.Core.Extensions
 
         public static IEnumerable<T> WhereNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, params TKey[] values)
         {
-            return WhereIn(source, propertySelector, values.AsEnumerable());
+            return WhereNotIn(source, propertySelector, values.AsEnumerable());
         }
 
         public static IEnumerable<T> WhereNotIn<T, TKey>(this IEnumerable<T> source, Func<T, TKey> propertySelector, IEnumerable<TKey> values)

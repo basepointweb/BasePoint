@@ -23,5 +23,13 @@
         bool HasMissingEntities(IEnumerable<Guid> entityIds);
 
         bool HasMissingEntities(IEnumerable<Entity> items);
+
+        IEnumerable<Entity> RemoveEntities(IEnumerable<Guid> entityIds);
+
+        IEnumerable<Entity> RemoveMissingEntities(IEnumerable<Guid> entityIds);
+
+        IEnumerable<Entity> RemoveWhereIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values);
+
+        IEnumerable<Entity> RemoveWhereNotIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values);
     }
 }

@@ -122,6 +122,54 @@ namespace BasePoint.Core.Domain.Entities
                 .Any(item => !entityIds.Contains(item));
         }
 
+        public IEnumerable<Entity> RemoveEntities(IEnumerable<Guid> entityIds)
+        {
+            var itemsToRemove = _items.Where(item => entityIds.Contains(item.Id)).ToList();
+
+            foreach (var item in itemsToRemove)
+            {
+                Remove(item);
+            }
+
+            return itemsToRemove;
+        }
+
+        public IEnumerable<Entity> RemoveMissingEntities(IEnumerable<Guid> entityIds)
+        {
+            var itemsToRemove = _items.Where(item => !entityIds.Contains(item.Id)).ToList();
+
+            foreach (var item in itemsToRemove)
+            {
+                Remove(item);
+            }
+
+            return itemsToRemove;
+        }
+
+        public IEnumerable<Entity> RemoveWhereIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values)
+        {
+            var itemsToRemove = _items.WhereIn(propertySelector, values);
+
+            foreach (var item in itemsToRemove)
+            {
+                Remove(item);
+            }
+
+            return itemsToRemove;
+        }
+
+        public IEnumerable<Entity> RemoveWhereNotIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values)
+        {
+            var itemsToRemove = _items.WhereNotIn(propertySelector, values);
+
+            foreach (var item in itemsToRemove)
+            {
+                Remove(item);
+            }
+
+            return itemsToRemove;
+        }
+
         public bool HasMissingEntities(IEnumerable<Entity> items)
         {
             return HasMissingEntities(items.SafeSelect(x => x.Id));
