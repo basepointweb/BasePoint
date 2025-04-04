@@ -13,6 +13,8 @@ namespace BasePoint.Core.Domain.Entities.Interfaces
 
         IBaseEntity EntityClone();
 
+        void Copy(IBaseEntity entity);
+
         void SetStateAsUpdated();
 
         void SetStateAsDeleted();

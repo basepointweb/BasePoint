@@ -31,5 +31,7 @@
         IEnumerable<Entity> RemoveWhereIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values);
 
         IEnumerable<Entity> RemoveWhereNotIn<TKey>(Func<Entity, TKey> propertySelector, IEnumerable<TKey> values);
+
+        void Equalize(IEnumerable<Entity> anotherEntityList);
     }
 }

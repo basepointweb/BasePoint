@@ -17,6 +17,11 @@ namespace BasePoint.Core.Extensions
             return string.IsNullOrWhiteSpace(inputString);
         }
 
+        public static bool EqualsIgnoreCase(this string inputString, string other)
+        {
+            return inputString.Equals(other, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string RemoveAccents(this string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);

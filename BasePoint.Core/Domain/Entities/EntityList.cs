@@ -170,6 +170,34 @@ namespace BasePoint.Core.Domain.Entities
             return itemsToRemove;
         }
 
+        public void Equalize(
+            IEnumerable<Entity> anotherEntityList)
+        {
+            //Items = [1,2,3]
+            //anotherEntityList = [2,3,4]
+            var entitiesIds = anotherEntityList
+                .SafeSelect(i => i.Id)
+                .ToList();
+
+            RemoveWhereNotIn(a => a.Id, entitiesIds); // removes 1, remaining Items [2,3] 
+
+            foreach (var item in Items)
+            {
+                var anotherItem = anotherEntityList.FirstOrDefault(a => a.Id == item.Id); // updates [2,3] 
+
+                if (anotherItem is not null)
+                    item.Copy(anotherItem);
+            }
+
+            var currentEntitiesIds = Items
+             .SafeSelect(i => i.Id)
+             .ToList();
+
+            var newItems = anotherEntityList.WhereNotIn(a => a.Id, currentEntitiesIds); // returns [4]
+
+            newItems.ForEach(x => Items.Add(x)); // adds 4, final result [2,3,4]
+        }
+
         public bool HasMissingEntities(IEnumerable<Entity> items)
         {
             return HasMissingEntities(items.SafeSelect(x => x.Id));
