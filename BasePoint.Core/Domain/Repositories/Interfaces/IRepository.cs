@@ -7,5 +7,7 @@ namespace BasePoint.Core.Domain.Repositories.Interfaces
     {
         void Persist(Entity entity, IUnitOfWork unitOfWork);
         Task<Entity> GetById(Guid id);
+
+        Task<IEnumerable<(Guid Id, Entity Entity)>> FetchByIds(IEnumerable<Guid> ids);
     }
 }

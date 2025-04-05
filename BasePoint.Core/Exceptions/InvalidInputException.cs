@@ -39,5 +39,15 @@ namespace BasePoint.Core.Exceptions
         {
             ThrowIf(enumerable.HasDuplicates(keySelectors), message);
         }
+
+        public static void ThrowIfAnyNull<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(enumerable.AnyNull(), message);
+        }
+
+        public static void ThrowIfAllNull<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(enumerable.AllNull(), message);
+        }
     }
 }

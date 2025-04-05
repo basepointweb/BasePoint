@@ -51,5 +51,15 @@ namespace BasePoint.Core.Exceptions
         {
             ThrowIf(inputObject is not null, message);
         }
+
+        public static void ThrowIfAnyNull<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(enumerable.AnyNull(), message);
+        }
+
+        public static void ThrowIfAllNull<T>(IEnumerable<T> enumerable, string message)
+        {
+            ThrowIf(enumerable.AllNull(), message);
+        }
     }
 }

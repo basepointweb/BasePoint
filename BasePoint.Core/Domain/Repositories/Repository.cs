@@ -1,8 +1,8 @@
 ﻿using BasePoint.Core.Domain.Cqrs;
 using BasePoint.Core.Domain.Cqrs.CommandProviders;
+using BasePoint.Core.Domain.Entities.Interfaces;
 using BasePoint.Core.Domain.Enumerators;
 using BasePoint.Core.Domain.Interceptors;
-using BasePoint.Core.Domain.Entities.Interfaces;
 using BasePoint.Core.Domain.Repositories.Interfaces;
 using BasePoint.Core.UnitOfWork.Interfaces;
 
@@ -36,6 +36,22 @@ namespace BasePoint.Core.Domain.Repositories
         public virtual async Task<Entity> GetById(Guid id)
         {
             return HandleAfterGetFromCommandProvider(await _commandProvider.GetById(id));
+        }
+
+        public virtual async Task<IEnumerable<(Guid Id, Entity Entity)>> FetchByIds(IEnumerable<Guid> ids)
+        {
+            var results = await Task.WhenAll(ids.Select(async id => (id, await _commandProvider.GetById(id))));
+
+            var fetchedEntities = new List<(Guid, Entity)>();
+
+            foreach (var result in results)
+            {
+                var handledEntity = HandleAfterGetFromCommandProvider(result.Item2);
+
+                fetchedEntities.Add((result.Item2.Id, handledEntity));
+            }
+
+            return fetchedEntities;
         }
 
         protected virtual T HandleAfterGetFromCommandProvider<T>(T entity) where T : IBaseEntity

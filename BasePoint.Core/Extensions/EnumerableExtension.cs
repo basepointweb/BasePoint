@@ -48,6 +48,16 @@ namespace BasePoint.Core.Extensions
             return collection == null || !collection.Any();
         }
 
+        public static bool AnyNull<T>(this IEnumerable<T> collection)
+        {
+            return collection == null || collection.Any(x => x is null);
+        }
+
+        public static bool AllNull<T>(this IEnumerable<T> collection)
+        {
+            return collection == null || collection.Count(x => x is null) == collection.Count();
+        }
+
         public static bool HasDuplicates<T, TKey>(this IEnumerable<T> source, params Expression<Func<T, TKey>>[] keySelectors)
         {
             var uniqueKeys = new HashSet<string>();
