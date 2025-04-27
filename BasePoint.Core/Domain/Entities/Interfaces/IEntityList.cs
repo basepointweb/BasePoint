@@ -14,6 +14,8 @@
 
         IEntityList<Entity> Clone();
 
+        IEntityList<Entity> CloneWhere<TKey>(Predicate<Entity> match);
+
         int RemoveAll(Predicate<Entity> match);
 
         bool ContainsWithId(Guid entityId);

@@ -9,8 +9,8 @@ namespace BasePoint.Core.Domain.Entities
     public class EntityList<Entity> : IEntityList<Entity>, ICollection, IList
         where Entity : IBaseEntity
     {
-        private readonly IList<Entity> _deletedItems;
-        private readonly IList<Entity> _items;
+        private readonly List<Entity> _deletedItems;
+        private readonly List<Entity> _items;
 
         public IBaseEntity Parent { get; protected set; }
 
@@ -371,19 +371,25 @@ namespace BasePoint.Core.Domain.Entities
             }
             set
             {
-                ((IList)this)[index] = (Entity)value;
+                ((IList)this)[index] = value;
             }
         }
 
         public IEntityList<Entity> Clone()
         {
+            return CloneWhere<Entity>(i => true); // clones all items
+        }
+
+        public IEntityList<Entity> CloneWhere<TKey>(Predicate<Entity> match)
+        {
+            var selectedEntities = _items.Where(i => match(i))
+                .ToList();
+
             var entities = new EntityList<Entity>();
 
-            foreach (var item in _items)
-            {
-                var cloneEntity = (Entity)item.EntityClone();
-                entities.Add(cloneEntity);
-            }
+            var clones = selectedEntities.SafeSelect(e => (Entity)e.EntityClone());
+
+            entities.AddRange(clones);
 
             return entities;
         }

@@ -61,5 +61,40 @@ namespace BasePoint.Core.Exceptions
         {
             ThrowIf(enumerable.AllNull(), message);
         }
+
+        public static void ThrowIfEquals(decimal inputValue, decimal anotherValue, string message)
+        {
+            ThrowIf(inputValue.Equals(anotherValue), message);
+        }
+
+        public static void ThrowIfEqualsZero(decimal inputValue, string message)
+        {
+            ThrowIf(inputValue < decimal.Zero, message);
+        }
+
+        public static void ThrowIfLessThanZero(decimal inputValue, string message)
+        {
+            ThrowIf(inputValue < decimal.Zero, message);
+        }
+
+        public static void ThrowIfLessThanOrEqualsZero(decimal inputValue, string message)
+        {
+            ThrowIf(inputValue <= decimal.Zero, message);
+        }
+
+        public static void ThrowIfGreaterThanZero(decimal inputValue, string message)
+        {
+            ThrowIf(inputValue > decimal.Zero, message);
+        }
+
+        public static void ThrowIfGreaterThanOrEqualsZero(decimal inputValue, string message)
+        {
+            ThrowIf(inputValue >= decimal.Zero, message);
+        }
+
+        public static void ThrowIfBetween(decimal inputValue, decimal initialValue, decimal finalValue, string message)
+        {
+            ThrowIf(inputValue.IsBetween(initialValue, finalValue), message);
+        }
     }
 }
